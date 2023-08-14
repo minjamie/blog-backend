@@ -1,4 +1,4 @@
-package com.example.blogbeckend.properties;
+package com.example.blog.properties;
 
 import lombok.Getter;
 import lombok.Setter;
