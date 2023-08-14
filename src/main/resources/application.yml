@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DATABASE_URL}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+      database-platform : org.hibernate.dialect.MySQL8Dialect
+    profiles:
+      active: local
+  logging:
+    output:
+      ansi:
+        enabled: always
+    level:
+      org.hibernate.SQL: DEBUG
+      org.hibernate.type.sql.BasicBinder: TRACE
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        one-indexed-parameters: true
