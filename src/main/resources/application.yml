@@ -4,16 +4,11 @@ spring:
     password: ${DATABASE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DATABASE_URL}
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-      database-platform : org.hibernate.dialect.MySQL8Dialect
+jpa:
+  properties:
     profiles:
       active: local
+  open-in-view: false
   logging:
     output:
       ansi:
