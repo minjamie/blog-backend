@@ -4,6 +4,9 @@ spring:
     password: ${DATABASE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DATABASE_URL}
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 jpa:
   properties:
     profiles:
@@ -16,9 +19,6 @@ jpa:
     level:
       org.hibernate.SQL: DEBUG
       org.hibernate.type.sql.BasicBinder: TRACE
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
   data:
     web:
       pageable:

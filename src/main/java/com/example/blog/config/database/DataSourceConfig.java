@@ -1,4 +1,4 @@
-package com.example.blog.config;
+package com.example.blog.config.database;
 
 import com.example.blog.properties.DataSourceProperty;
 import lombok.RequiredArgsConstructor;
