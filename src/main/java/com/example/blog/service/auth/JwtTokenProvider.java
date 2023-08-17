@@ -23,11 +23,18 @@ public class JwtTokenProvider {
         String[] tokenArr = token.split(" ");
         token = tokenArr[1];
         Claims claims = parseToken(token, ACCESS_KEY);
-        return String.valueOf((String)claims.get("email"));
+        return String.valueOf(claims.get("sub"));
     }
 
-    public String createToken(String email, Long expire, byte[] secretKey){
-        Claims claims = Jwts.claims().setSubject(email);
+    public String getUserId(String token) {
+        String[] tokenArr = token.split(" ");
+        token = tokenArr[1];
+        Claims claims = parseToken(token, ACCESS_KEY);
+        return String.valueOf(claims.get("jti"));
+    }
+
+    public String createToken(Integer userId, String email, Long expire, byte[] secretKey){
+        Claims claims = Jwts.claims().setSubject(email).setId(userId.toString());
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -37,19 +44,21 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String createAccessToken(String email) {
-        return createToken(email,ACCESS_TOKEN_EXPIRE_COUNT, ACCESS_KEY);
+    public String createAccessToken(Integer userId,String email) {
+        return createToken(userId, email,ACCESS_TOKEN_EXPIRE_COUNT, ACCESS_KEY);
     }
 
-    public String createRefreshToken(String email) {
-        return createToken(email, REFRESH_TOKEN_EXPIRE_COUNT, REFRESH_KEY);
+    public String createRefreshToken(Integer userId, String email) {
+        return createToken(userId, email, REFRESH_TOKEN_EXPIRE_COUNT, REFRESH_KEY);
     }
 
-    public boolean validateToken(String jwtToken) {
+    public boolean validateToken(String token) {
         try {
+            String[] tokenArr = token.split(" ");
+            token = tokenArr[1];
             Claims claims = Jwts.parser()
                     .setSigningKey(getSignInKey(ACCESS_KEY))
-                    .parseClaimsJws(jwtToken)
+                    .parseClaimsJws(token)
                     .getBody();
             Date now = new Date();
             return claims.getExpiration()
