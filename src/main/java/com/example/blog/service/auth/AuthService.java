@@ -54,8 +54,8 @@ public class AuthService {
         if(!passwordEncoder.matches(loginRequest.getPassword(), user.get().getPassword())){
             return new LoginResponse("비밀번호가 틀렸습니다.");
         }
-            String accessToken = jwtTokenProvider.createAccessToken(user.get().getEmail());
-            String refreshToken = jwtTokenProvider.createRefreshToken(user.get().getEmail());
+            String accessToken = jwtTokenProvider.createAccessToken(user.get().getUserId(),user.get().getEmail());
+            String refreshToken = jwtTokenProvider.createRefreshToken(user.get().getUserId(),user.get().getEmail());
             RefreshToken refreshTokenEntity = new RefreshToken();
             refreshTokenEntity.setValue(refreshToken);
             refreshTokenEntity.setUser(user.get());

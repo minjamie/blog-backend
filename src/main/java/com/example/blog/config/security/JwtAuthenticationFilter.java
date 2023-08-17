@@ -1,5 +1,6 @@
 package com.example.blog.config.security;
 
+import com.example.blog.properties.JwtProperties;
 import com.example.blog.service.auth.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,19 +26,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorization");
-        final String jwt;
+        final String authHeader = request.getHeader(JwtProperties.HEADER_STRING);
         final String email;
 
-        if(authHeader == null || !authHeader.startsWith("Bearer ")){
+        if(authHeader == null || !authHeader.startsWith(JwtProperties.TOKEN_PREFIX)){
             filterChain.doFilter(request, response);
             return;
         }
-        jwt = authHeader.substring(7);
-        email = jwtTokenProvider.getEmail(jwt);
-        if(email != null && SecurityContextHolder.getContext().getAuthentication() ==null){
+        email = jwtTokenProvider.getEmail(authHeader);
+        if(email != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
-            if(jwtTokenProvider.validateToken(jwt)){
+            if(jwtTokenProvider.validateToken(authHeader)){
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
@@ -49,6 +48,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 );
 
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            } else {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT token is invalid");
+                return;
             }
             filterChain.doFilter(request, response);
         }
