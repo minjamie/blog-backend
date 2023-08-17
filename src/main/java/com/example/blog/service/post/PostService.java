@@ -40,43 +40,34 @@ public class PostService {
         Integer wroteUserId = Integer.valueOf(userId);
         Long findPostId = Long.valueOf(postId);
 
-        Optional<Post> updatePost = postRepository.findByUserIdAndPostId(wroteUserId,findPostId);
-       if(updatePost.isEmpty()){
-           return new UpdatePostResponse("본인이 작성한 해당 게시글은 존재하지 않습니다.");
-       } else {
-           updatePost.get().setTitleAndContent(updatePostRequest.getTitle(), updatePostRequest.getContent());
-           postRepository.save(updatePost.get());
-           return new UpdatePostResponse("게시글이 성공적으로 수정되었습니다.");
-       }
+        Post post = postRepository.findById(findPostId).orElse(null);
+        if(post == null){
+            return new UpdatePostResponse("해당 게시글은 존재하지 않습니다.");
+        }
+
+        User user = post.getUser();
+        if(user.getUserId() != wroteUserId){
+            return new UpdatePostResponse("해당 게시글은 본인이 작성한 게시글이 아닙니다.");
+        }
+        post.setTitle(updatePostRequest.getTitle());
+        post.setContent(updatePostRequest.getContent());
+        postRepository.save(post);
+        return new UpdatePostResponse("게시글이 성공적으로 수정되었습니다.");
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public DeletePostResponse deletePost(String userId, String postId) {
         Integer wroteUserId = Integer.valueOf(userId);
         Long findPostId = Long.valueOf(postId);
 
-        Optional<Post> deletePost = postRepository.findByUserIdAndPostId(wroteUserId,findPostId);
-        if(deletePost.isEmpty()){
-            return new DeletePostResponse("본인이 작성한 해당 게시글은 존재하지 않습니다.");
-        } else {
+        Post post = postRepository.findById(findPostId).orElse(null);
+        if(post == null){
+            return new DeletePostResponse("해당 게시글은 존재하지 않습니다.");
+        }
+        User user = post.getUser();
+        if(user.getUserId() != wroteUserId){
+            return new DeletePostResponse("해당 게시글은 본인이 작성한 게시글이 아닙니다.");
+        }
             postRepository.deleteById(findPostId);
             return new DeletePostResponse("게시글이 성공적으로 삭제되었습니다.");
-        }
     }
 }

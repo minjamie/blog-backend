@@ -81,48 +81,29 @@ public class PostController {
             if(jwtTokenProvider.validateToken(token)){
                 String userId = jwtTokenProvider.getUserId(token);
                 UpdatePostResponse response = postService.updatePost(userId, post_id, updatePostRequest);
-                if(response.getMessage() == "본인이 작성한 해당 게시글은 존재하지 않습니다.") return new ResponseEntity(response, HttpStatus.NOT_FOUND);
-                if(response.getMessage() == "게시물이 성공적으로 수정되었습니다.") return new ResponseEntity(response, HttpStatus.NO_CONTENT);
+                if(response.getMessage() == "해당 게시글은 존재하지 않습니다.") return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+                if(response.getMessage() == "해당 게시글은 본인이 작성한 게시글이 아닙니다.") return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
+                if(response.getMessage() == "게시글이 성공적으로 수정되었습니다.") return new ResponseEntity(response, HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
+
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     @ApiOperation("게시글 삭제")
     @DeleteMapping("/post/{post_id}")
     public ResponseEntity<DeletePostResponse> deletePost(
-            @PathVariable String post_id,
-            BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        } else {
+            @PathVariable String post_id
+    ){
             String token = httpServletRequest.getHeader(JwtProperties.HEADER_STRING);
 
             if(jwtTokenProvider.validateToken(token)){
                 String userId = jwtTokenProvider.getUserId(token);
                 DeletePostResponse response = postService.deletePost(userId, post_id);
-                if(response.getMessage() == "본인이 작성한 해당 게시글은 존재하지 않습니다.") return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+                if(response.getMessage() == "해당 게시글은 존재하지 않습니다.") return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+                if(response.getMessage() == "해당 게시글은 본인이 작성한 게시글이 아닙니다.") return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
                 if(response.getMessage() == "게시물이 성공적으로 삭제되었습니다.") return new ResponseEntity(response, HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-        }
     }
 }
