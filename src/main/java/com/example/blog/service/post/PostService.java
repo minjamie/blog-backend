@@ -51,8 +51,7 @@ public class PostService {
         if(user.getUserId() != wroteUserId){
             return new UpdatePostResponse("해당 게시글은 본인이 작성한 게시글이 아닙니다.");
         }
-        post.setTitle(updatePostRequest.getTitle());
-        post.setContent(updatePostRequest.getContent());
+        post.setTitleAndContent(updatePostRequest.getTitle(), updatePostRequest.getContent());
         postRepository.save(post);
         return new UpdatePostResponse("게시글이 성공적으로 수정되었습니다.");
     }
