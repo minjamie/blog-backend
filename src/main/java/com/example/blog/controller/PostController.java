@@ -88,6 +88,24 @@ public class PostController {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     @ApiOperation("게시글 삭제")
     @DeleteMapping("/post/{post_id}")
     public ResponseEntity<DeletePostResponse> deletePost(

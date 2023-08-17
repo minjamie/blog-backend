@@ -50,6 +50,23 @@ public class PostService {
        }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public DeletePostResponse deletePost(String userId, String postId) {
         Integer wroteUserId = Integer.valueOf(userId);
         Long findPostId = Long.valueOf(postId);
