@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class GetPost {
-    private Integer id;
+    private Long id;
     private String content;
     private String title;
     private String author;
