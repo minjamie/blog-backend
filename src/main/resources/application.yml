@@ -4,16 +4,14 @@ spring:
     password: ${DATABASE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DATABASE_URL}
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-      database-platform : org.hibernate.dialect.MySQL8Dialect
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+jpa:
+  properties:
     profiles:
       active: local
+  open-in-view: false
   logging:
     output:
       ansi:
@@ -21,9 +19,6 @@ spring:
     level:
       org.hibernate.SQL: DEBUG
       org.hibernate.type.sql.BasicBinder: TRACE
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
   data:
     web:
       pageable:
