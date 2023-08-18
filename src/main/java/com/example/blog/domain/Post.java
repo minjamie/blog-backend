@@ -45,9 +45,6 @@ public class Post extends BaseTime {
     @OneToMany(mappedBy = "post")
     private List<Comment> comment;
 
-    @OneToMany(mappedBy = "post")
-    private List<Like> like;
-
     public void setTitleAndContent(String title, String content) {
         this.title = title;
         this.content = content;

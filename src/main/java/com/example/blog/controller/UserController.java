@@ -8,6 +8,7 @@ import com.example.blog.dto.user.signup.SignupRequest;
 import com.example.blog.dto.user.signup.SignupResponse;
 import com.example.blog.service.auth.AuthService;
 import com.example.blog.service.auth.RefreshTokenService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@Api(tags = {"회원 관련 Controller"})
 public class UserController {
     private final AuthService authService;
     private final RefreshTokenService refreshTokenService;
