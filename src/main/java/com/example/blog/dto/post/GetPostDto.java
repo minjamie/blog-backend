@@ -1,7 +1,6 @@
 package com.example.blog.dto.post;
 
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 @Getter
@@ -9,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class GetPost {
-    private Long id;
+public class GetPostDto {
+    private Integer id;
     private String content;
     private String title;
     private String author;

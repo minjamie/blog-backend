@@ -6,6 +6,7 @@ import com.example.blog.properties.JwtProperties;
 import com.example.blog.service.auth.JwtTokenProvider;
 import com.example.blog.service.post.PostService;
 import com.example.blog.service.user.UserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@Api(tags = {"게시글 관련 Controller"})
 public class PostController {
 
     private final PostService postService;
@@ -101,7 +103,7 @@ public class PostController {
                 DeletePostResponse response = postService.deletePost(userId, post_id);
                 if(response.getMessage() == "해당 게시글은 존재하지 않습니다.") return new ResponseEntity(response, HttpStatus.NOT_FOUND);
                 if(response.getMessage() == "해당 게시글은 본인이 작성한 게시글이 아닙니다.") return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
-                if(response.getMessage() == "게시물이 성공적으로 삭제되었습니다.") return new ResponseEntity(response, HttpStatus.NO_CONTENT);
+                if(response.getMessage() == "게시글이 성공적으로 삭제되었습니다.") return new ResponseEntity(response, HttpStatus.OK);
             }
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
     }

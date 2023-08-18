@@ -2,15 +2,13 @@ package com.example.blog.controller;
 
 import com.example.blog.domain.User;
 import com.example.blog.dto.comment.*;
-import com.example.blog.dto.post.CreatePostResponse;
-import com.example.blog.dto.post.UpdatePostRequest;
 import com.example.blog.dto.post.UpdatePostResponse;
 import com.example.blog.properties.JwtProperties;
 import com.example.blog.service.auth.JwtTokenProvider;
 import com.example.blog.service.comment.CommentService;
 import com.example.blog.service.user.UserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@Api(tags = {"댓글 관련 Controller"})
 public class CommentController {
 
     private final CommentService commentService;
@@ -83,7 +82,7 @@ public class CommentController {
         }
     }
 
-    @Operation(description = "댓글 삭제")
+    @ApiOperation("댓글 삭제")
     @DeleteMapping("/comment/{comment_id}")
     public ResponseEntity<DeleteCommentResponse> deletePost(
             @PathVariable String comment_id

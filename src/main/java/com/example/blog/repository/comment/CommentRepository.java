@@ -2,7 +2,6 @@ package com.example.blog.repository.comment;
 
 import com.example.blog.domain.Comment;
 import com.example.blog.dto.comment.GetCommentDto;
-import com.example.blog.dto.post.GetPost;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -20,7 +20,7 @@ public class Post extends BaseTime {
     @Id
     @Column(name="post_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postId;
+    private Integer postId;
 
     public Post(User user, String author,String title, String content) {
         this.user = user;
@@ -44,9 +44,6 @@ public class Post extends BaseTime {
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comment;
-
-    @OneToMany(mappedBy = "post")
-    private List<Like> like;
 
     public void setTitleAndContent(String title, String content) {
         this.title = title;

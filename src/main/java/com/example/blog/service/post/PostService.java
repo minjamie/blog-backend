@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +15,7 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    public List<GetPost> getAllPost() {
+    public List<GetPostDto> getAllPost() {
         return postRepository.findAllByAnonymous();
     }
 
@@ -32,13 +31,13 @@ public class PostService {
        return new CreatePostResponse("게시물이 성공적으로 작성되었습니다.");
     }
 
-    public List<GetPost> getAllPostByEmail(String email) {
+    public List<GetPostDto> getAllPostByEmail(String email) {
         return postRepository.findAllByEmail(email);
     }
 
     public UpdatePostResponse updatePost(String userId, String postId, UpdatePostRequest updatePostRequest) {
         Integer wroteUserId = Integer.valueOf(userId);
-        Long findPostId = Long.valueOf(postId);
+        Integer findPostId = Integer.valueOf(postId);
 
         Post post = postRepository.findById(findPostId).orElse(null);
         if(post == null){
@@ -57,7 +56,7 @@ public class PostService {
 
     public DeletePostResponse deletePost(String userId, String postId) {
         Integer wroteUserId = Integer.valueOf(userId);
-        Long findPostId = Long.valueOf(postId);
+        Integer findPostId = Integer.valueOf(postId);
 
         Post post = postRepository.findById(findPostId).orElse(null);
         if(post == null){

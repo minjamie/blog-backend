@@ -21,10 +21,11 @@ public class Like extends BaseTime {
     private Boolean isLike;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "post_id")
-    private Post post;
-
-    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Like(Boolean isLike, User user) {
+        this.isLike = isLike;
+        this.user = user;
+    }
 }
