@@ -60,7 +60,7 @@ public class CommentController {
         }
     }
 
-    @ApiOperation("게시글 수정")
+    @ApiOperation("댓글 수정")
     @PutMapping("/comment/{comment_id}")
     public ResponseEntity<UpdateCommentResponse> updatePost(
             @PathVariable String comment_id,
