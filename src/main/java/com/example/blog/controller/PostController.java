@@ -24,10 +24,10 @@ public class PostController {
 
     private final PostService postService;
     private final UserService userService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     private HttpServletRequest httpServletRequest;
-    private final JwtTokenProvider jwtTokenProvider;
 
     @ApiOperation("전체 게시글 조회")
     @GetMapping("/posts")
@@ -36,7 +36,6 @@ public class PostController {
         response.setPosts(postService.getAllPost());
         return new ResponseEntity(response, HttpStatus.OK);
     }
-
 
     @ApiOperation("이메일로 나의 게시글 조회")
     @GetMapping("/posts/search")
