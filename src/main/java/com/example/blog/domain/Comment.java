@@ -7,10 +7,8 @@ import javax.persistence.Id;
 
 
 import lombok.*;
-import org.hibernate.Hibernate;
+
 import javax.persistence.*;
-import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -24,9 +22,8 @@ public class Comment extends BaseTime {
     @Id
     @Column(name = "comment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long commentId;
+    private Integer commentId;
 
-    @Column(nullable = true)
     private String author;
 
     private String content;
@@ -41,4 +38,11 @@ public class Comment extends BaseTime {
     @ManyToOne()
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Comment(User user, Post post, String author, String content) {
+        this.user = user;
+        this.post = post;
+        this.author = author;
+        this.content = content;
+    }
 }

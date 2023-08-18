@@ -16,7 +16,6 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
 
     public List<GetPost> getAllPost() {
         return postRepository.findAllByAnonymous();
